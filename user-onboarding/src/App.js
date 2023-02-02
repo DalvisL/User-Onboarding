@@ -29,13 +29,13 @@ function App() {
       .then(valid => setErrors({...errors, [name]: ''}))
       .catch(err => setErrors({...errors, [name]: err.errors[0]}))
   }
-  const change = (event) => { // onChange event handler function
+  const change = (event) => { // onChange event handler
    const  {name, type, checked, value} = event.target;
    const valueToUse = type === 'checkbox' ? checked : value;
    setFormData({...formData, [name] : valueToUse});
    setFormErrors(name, valueToUse);
   }
-  const submit = (event) => {
+  const submit = (event) => { // onSubmit event handler
     event.preventDefault()
     const newUser = {
       first_name: formData.first_name.trim(),
@@ -50,7 +50,6 @@ function App() {
         const newArr = [...users];
         newArr.push(res.data);
         setUsers(newArr);
-        console.log(users);
         setFormData({
           first_name: '',
           last_name: '',
@@ -72,7 +71,7 @@ function App() {
       <Form formData={formData} change={change} submit={submit} disabled={disabled} errors={errors}/>
       {users.length > 0 && users.map((user, index) => {
         return(
-          <pre className='users'>{JSON.stringify(user)}</pre>
+          <pre className='users' key={index}>{JSON.stringify(user)}</pre>
         )
       })}
     </div>
